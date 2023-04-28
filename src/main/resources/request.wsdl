@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="GWClientSAService"
+                  targetNamespace="http://integration.gwclient.smallsystems.cma.se/"
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://integration.gwclient.smallsystems.cma.se/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+   <wsdl:types>
+      <xs:schema targetNamespace="http://integration.gwclient.smallsystems.cma.se/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+         <xs:element name="fault" type="tns:fault_t"/>
+         <xs:element name="getUpdates" type="tns:empty_t"/>
+         <xs:element name="getUpdatesResponse" type="tns:ParamsMtMsgArray"/>
+         <xs:element name="send" type="tns:send_t"/>
+         <xs:element name="sendACKNAK" type="tns:sendACKNAK_t"/>
+         <xs:element name="sendACKNAKResponse" type="tns:empty_t"/>
+         <xs:element name="sendResponse" type="tns:sendResponse"/>
+         <xs:complexType name="send_t">
+            <xs:sequence>
+               <xs:element name="message" type="tns:ParamsMtMsg"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="ParamsMtMsg">
+            <xs:sequence>
+               <xs:element name="block4" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgCopySrvId" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgCopySrvInfo" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgDelNotifRq" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgFinValidation" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgFormat" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgId" type="xs:long"/>
+               <xs:element minOccurs="0" name="msgMacResult" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgNetInputTime" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgNetMir" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgNetOutputDate" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgPacResult" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgPde" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgPdm" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgPriority" type="xs:string"/>
+               <xs:element name="msgReceiver" type="xs:string"/>
+               <xs:element name="msgSender" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgSequence" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgSession" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgSubFormat" type="xs:string"/>
+               <xs:element name="msgType" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgSrvTpId" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgEnd2EndRef" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgUserPriority" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgUserReference" type="xs:string"/>
+               <xs:element name="format" type="xs:string"/>
+               <xs:element minOccurs="0" name="refMsgUserReference" type="xs:string"/>
+               <xs:element minOccurs="0" name="msgNumOfBatches" type="xs:int"/>
+               <xs:element minOccurs="0" name="msgAmount" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="sendResponse">
+            <xs:sequence>
+               <xs:element name="data" type="tns:result_t"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="result_t">
+            <xs:sequence>
+               <xs:element name="type" type="tns:ack_nak_type"/>
+               <xs:element name="datetime" type="xs:string"/>
+               <xs:element name="mir" type="xs:string"/>
+               <xs:element minOccurs="0" name="ref" type="xs:string"/>
+               <xs:element minOccurs="0" name="signature" type="xs:string"/>
+               <xs:element minOccurs="0" name="code" type="xs:string"/>
+               <xs:element minOccurs="0" name="description" type="xs:string"/>
+               <xs:element minOccurs="0" name="info" type="xs:string"/>
+               <xs:element minOccurs="0" name="status" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="fault_t">
+            <xs:sequence>
+               <xs:element minOccurs="0" name="code" type="xs:string"/>
+               <xs:element minOccurs="0" name="description" type="xs:string"/>
+               <xs:element minOccurs="0" name="info" type="xs:string"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="sendACKNAK_t">
+            <xs:sequence>
+               <xs:element name="data" type="tns:result_t"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:complexType name="empty_t">
+            <xs:sequence/>
+         </xs:complexType>
+         <xs:complexType name="ParamsMtMsgArray">
+            <xs:sequence>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:ParamsMtMsg"/>
+            </xs:sequence>
+         </xs:complexType>
+         <xs:simpleType name="ack_nak_type">
+            <xs:restriction base="xs:string">
+               <xs:enumeration value="ACK"/>
+               <xs:enumeration value="NAK"/>
+            </xs:restriction>
+         </xs:simpleType>
+      </xs:schema>
+   </wsdl:types>
+   <wsdl:message name="GwClientFault">
+      <wsdl:part element="tns:fault" name="GwClientFault"/>
+   </wsdl:message>
+   <wsdl:message name="sendResponse">
+      <wsdl:part element="tns:sendResponse" name="parameters"/>
+   </wsdl:message>
+   <wsdl:message name="send">
+      <wsdl:part element="tns:send" name="parameters"/>
+   </wsdl:message>
+   <wsdl:portType name="GWClientSA">
+      <wsdl:operation name="send">
+         <wsdl:input message="tns:send" name="send"/>
+         <wsdl:output message="tns:sendResponse" name="sendResponse"/>
+         <wsdl:fault message="tns:GwClientFault" name="GwClientFault"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="GWClientSAServiceSoapBinding" type="tns:GWClientSA">
+      <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+      <wsdl:operation name="send">
+         <soap:operation soapAction="" style="document"/>
+         <wsdl:input name="send">
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output name="sendResponse">
+            <soap:body use="literal"/>
+         </wsdl:output>
+         <wsdl:fault name="GwClientFault">
+            <soap:fault name="GwClientFault" use="literal"/>
+         </wsdl:fault>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="GWClientSAService">
+      <wsdl:port binding="tns:GWClientSAServiceSoapBinding" name="GWClientSAPort">
+         <soap:address location="http://localhost:8080/GWClientSAService/GWClientSA"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
