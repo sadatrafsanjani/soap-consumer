@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="GWClientSAService"
-                  targetNamespace="http://integration.gwclient.smallsystems.cma.se/"
-                  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
                   xmlns:tns="http://integration.gwclient.smallsystems.cma.se/"
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                  name="GWClientSAService"
+                  targetNamespace="http://integration.gwclient.smallsystems.cma.se/">
    <wsdl:types>
-      <xs:schema targetNamespace="http://integration.gwclient.smallsystems.cma.se/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                 xmlns:tns="http://integration.gwclient.smallsystems.cma.se/"
+                 targetNamespace="http://integration.gwclient.smallsystems.cma.se/"
+                 version="1.0">
          <xs:element name="fault" type="tns:fault_t"/>
          <xs:element name="getUpdates" type="tns:empty_t"/>
          <xs:element name="getUpdatesResponse" type="tns:ParamsMtMsgArray"/>
@@ -77,6 +81,11 @@
                <xs:element minOccurs="0" name="info" type="xs:string"/>
             </xs:sequence>
          </xs:complexType>
+         <xs:complexType name="ParamsMtMsgArray">
+            <xs:sequence>
+               <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:ParamsMtMsg"/>
+            </xs:sequence>
+         </xs:complexType>
          <xs:complexType name="sendACKNAK_t">
             <xs:sequence>
                <xs:element name="data" type="tns:result_t"/>
@@ -84,11 +93,6 @@
          </xs:complexType>
          <xs:complexType name="empty_t">
             <xs:sequence/>
-         </xs:complexType>
-         <xs:complexType name="ParamsMtMsgArray">
-            <xs:sequence>
-               <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:ParamsMtMsg"/>
-            </xs:sequence>
          </xs:complexType>
          <xs:simpleType name="ack_nak_type">
             <xs:restriction base="xs:string">
@@ -99,19 +103,19 @@
       </xs:schema>
    </wsdl:types>
    <wsdl:message name="GwClientFault">
-      <wsdl:part element="tns:fault" name="GwClientFault"/>
+      <wsdl:part element="tns:fault" name="GwClientFault"> </wsdl:part>
    </wsdl:message>
    <wsdl:message name="sendResponse">
-      <wsdl:part element="tns:sendResponse" name="parameters"/>
+      <wsdl:part element="tns:sendResponse" name="parameters"> </wsdl:part>
    </wsdl:message>
    <wsdl:message name="send">
-      <wsdl:part element="tns:send" name="parameters"/>
+      <wsdl:part element="tns:send" name="parameters"> </wsdl:part>
    </wsdl:message>
    <wsdl:portType name="GWClientSA">
       <wsdl:operation name="send">
-         <wsdl:input message="tns:send" name="send"/>
-         <wsdl:output message="tns:sendResponse" name="sendResponse"/>
-         <wsdl:fault message="tns:GwClientFault" name="GwClientFault"/>
+         <wsdl:input message="tns:send" name="send"> </wsdl:input>
+         <wsdl:output message="tns:sendResponse" name="sendResponse"> </wsdl:output>
+         <wsdl:fault message="tns:GwClientFault" name="GwClientFault"> </wsdl:fault>
       </wsdl:operation>
    </wsdl:portType>
    <wsdl:binding name="GWClientSAServiceSoapBinding" type="tns:GWClientSA">
@@ -131,7 +135,7 @@
    </wsdl:binding>
    <wsdl:service name="GWClientSAService">
       <wsdl:port binding="tns:GWClientSAServiceSoapBinding" name="GWClientSAPort">
-         <soap:address location="http://localhost:8080/GWClientSAService/GWClientSA"/>
+         <soap:address location="http://192.168.246.80:8000/GWClientSAService/GWClientSA"/>
       </wsdl:port>
    </wsdl:service>
 </wsdl:definitions>

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.cosumer</groupId>
 	<artifactId>soap-cosumer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<name>soap-cosumer</name>
 	<description>Demo project for Spring Boot</description>
@@ -59,22 +59,6 @@
 			<version>2.3.4</version>
 		</dependency>
 	</dependencies>
-
-	<profiles>
-		<profile>
-			<id>java17</id>
-			<activation>
-				<jdk>[17,)</jdk>
-			</activation>
-
-			<dependencies>
-				<dependency>
-					<groupId>org.glassfish.jaxb</groupId>
-					<artifactId>jaxb-runtime</artifactId>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 
 	<build>
 		<plugins>
