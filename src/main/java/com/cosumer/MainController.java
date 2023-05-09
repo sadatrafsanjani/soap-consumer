@@ -18,32 +18,30 @@ public class MainController {
     public ResponseEntity index(){
 
         String soapEndpointUrl = Constant.URL;
-        String soapAction = Constant.URL;
-        SOAPMessage response = callSoapWebService(soapEndpointUrl, soapAction);
-
-
+        SOAPMessage response = callSoapWebService(soapEndpointUrl);
 
         try {
 
             SOAPBody body = response.getSOAPPart().getEnvelope().getBody();
 
-            log.info("Response: {}", body.getChildNodes().item(0).getTextContent());
+            log.info("TYPE: {}", body.getChildNodes().item(0).getFirstChild().getChildNodes().item(0).getTextContent());
+            log.info("datetime: {}", body.getChildNodes().item(0).getFirstChild().getChildNodes().item(1).getTextContent());
+            log.info("mir: {}", body.getChildNodes().item(0).getFirstChild().getChildNodes().item(2).getTextContent());
+            log.info("signature: {}", body.getChildNodes().item(0).getFirstChild().getChildNodes().item(3).getTextContent());
 
             return new ResponseEntity(HttpStatus.OK);
 
         } catch (SOAPException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
-    private SOAPMessage callSoapWebService(String soapEndpointUrl, String soapAction){
+    private SOAPMessage callSoapWebService(String soapEndpointUrl){
 
         try {
             SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
             SOAPConnection soapConnection = soapConnectionFactory.createConnection();
-            SOAPMessage response = soapConnection.call(createSOAPRequest(soapAction), soapEndpointUrl);
+            SOAPMessage response = soapConnection.call(createSOAPRequest(), soapEndpointUrl);
             soapConnection.close();
 
             return response;
@@ -54,7 +52,7 @@ public class MainController {
         return null;
     }
 
-    private SOAPMessage createSOAPRequest(String soapAction) {
+    private SOAPMessage createSOAPRequest() {
 
         try {
             MessageFactory messageFactory = MessageFactory.newInstance();
@@ -92,7 +90,7 @@ public class MainController {
                 "</FinInstnId>" +
                 "</FIId>" +
                 "</To>" +
-                "<BizMsgIdr>230509CIBLBDDHAXXX0008145559</BizMsgIdr>" +
+                "<BizMsgIdr>230509CIBLBDDHAXXX0008145554</BizMsgIdr>" +
                 "<MsgDefIdr>camt.018.001.03</MsgDefIdr>" +
                 "<BizSvc>RTGS</BizSvc>" +
                 "<CreDt>2023-05-09T16:59:04Z</CreDt>" +
@@ -158,7 +156,7 @@ public class MainController {
             format.addTextNode("MX");
 
             SOAPElement msgNetMir = message.addChildElement("msgNetMir");
-            msgNetMir.addTextNode("230509CIBLBDDHAXXX0008145559");
+            msgNetMir.addTextNode("230509CIBLBDDHAXXX0008145554");
 
 
         } catch (SOAPException e) {
